@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Livewire\ProductBoard;
+use App\Livewire\ProductHistory;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,4 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('在庫一覧')
         ->name('productBoard')
         ->get('/', ProductBoard::class);
+
+    Route::prefix('移動履歴')
+        ->name('productHistory')
+        ->get('/', ProductHistory::class);
 });

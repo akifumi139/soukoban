@@ -10,7 +10,8 @@
           <i class="fa-solid fa-hammer me-2"></i>
           <span class="underline">管理モード</span>
         </a>
-        <a class="text-xl font-bold text-teal-600 py-2 px-4 rounded flex items-center" href="#">
+        <a class="text-xl font-bold text-teal-600 py-2 px-4 rounded flex items-center"
+          href="{{ route('productHistory') }}">
           <i class="fa-solid fa-clock-rotate-left me-2"></i>
           <span class="underline">履歴</span>
         </a>
