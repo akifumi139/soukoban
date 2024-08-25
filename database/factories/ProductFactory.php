@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Fakers\MinecraftFakerServiceProvider;
 use App\Fakers\ModelNumberProvider;
 use App\Models\ProductStock;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,10 +21,11 @@ class ProductFactory extends Factory
     {
         $faker = \Faker\Factory::create();
         $faker->addProvider(new ModelNumberProvider($faker));
+        $faker->addProvider(new MinecraftFakerServiceProvider($faker));
 
         return [
             'model_number' => $faker->modelNumber(),
-            'name' => $faker->word(),
+            'name' => $faker->minecraftItem(),
         ];
     }
 
