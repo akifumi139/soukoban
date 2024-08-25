@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 
-class AuthController extends Controller
+class AuthController
 {
     public function index()
     {
@@ -16,6 +16,6 @@ class AuthController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        return to_route('stocks.index');
+        return to_route('productBoard');
     }
 }
