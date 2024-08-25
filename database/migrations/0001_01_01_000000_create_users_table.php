@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('password');
             $table->string('role');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
         });
     }
 
