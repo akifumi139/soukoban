@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->unique()->constrained();
+            $table->foreignId('product_id')->unique()->constrained()->cascadeOnDelete();
             $table->unsignedInteger('count');
 
             $table->dateTime('updated_at')->useCurrent();

@@ -6,7 +6,7 @@
         class="w-full md:max-w-md p-3 border bg-gray-200 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         type="text" wire:model.change="search" placeholder="検索...">
       <div class="flex flex-row md:items-center  md:space-y-0 md:space-x-3">
-        <a class="text-xl font-bold text-sky-950 py-2 px-4 rounded flex items-center" href="#">
+        <a class="text-xl font-bold text-sky-950 py-2 px-4 rounded flex items-center" href="{{ route('stockManager') }}">
           <i class="fa-solid fa-hammer me-2"></i>
           <span class="underline">管理モード</span>
         </a>
