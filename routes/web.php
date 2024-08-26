@@ -5,7 +5,7 @@ use App\Livewire\ProductBoard;
 use App\Livewire\ProductHistory;
 use App\Livewire\StockManager;
 use Illuminate\Support\Facades\Route;
-
+use Livewire\Livewire;
 
 Route::controller(AuthController::class)
     ->group(function () {
@@ -26,4 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('移動履歴')
         ->name('productHistory')
         ->get('/', ProductHistory::class);
+});
+
+
+Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/soukoban/livewire/update', $handle);
 });

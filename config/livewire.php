@@ -172,5 +172,5 @@ return [
     'pagination_theme' => 'tailwind',
 
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('APP_URL') . '/livewire/livewire.js',
 ];
