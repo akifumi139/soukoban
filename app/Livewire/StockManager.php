@@ -22,7 +22,6 @@ class StockManager extends Component
     public array $cart = [];
 
     public bool $showModal = false;
-    public bool $showAddModal = false;
 
     public Collection $products;
 

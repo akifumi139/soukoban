@@ -29,6 +29,38 @@ class CheckoutAction
         });
     }
 
+    public function add(): void
+    {
+        DB::transaction(function () {
+            $products = [];
+            foreach ($this->cart as $p) {
+                if ($p->status == '新規') {
+                    $product = Product::create([
+                        'name' => $p->name,
+                        'model_number' => $p->model_number,
+                    ]);
+
+                    $product->stock()
+                        ->create(['count' => $p->count]);
+                } else {
+                    $product = Product::find($p->id);
+                    $currentStock = $product->StockCount;
+                    $product->stock()
+                        ->update(['count' => $currentStock + $p->count]);
+                }
+
+                $products[] = [
+                    'product_id' => $product->id,
+                    'count' => $product->StockCount,
+                    'info' => $product,
+                ];
+            }
+
+            $this->logCartTransaction($products, '追加');
+        });
+    }
+
+
     public function delete(): void
     {
         DB::transaction(function () {

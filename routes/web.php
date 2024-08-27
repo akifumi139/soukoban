@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Livewire\AddStock;
 use App\Livewire\DeleteStock;
 use App\Livewire\ProductBoard;
 use App\Livewire\ProductHistory;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
         ->name('stockManager')
         ->group(function () {
             Route::get('/', StockManager::class);
+            Route::get('add', AddStock::class)->name('.add');
             Route::get('delete', DeleteStock::class)->name('.delete');
         });
 

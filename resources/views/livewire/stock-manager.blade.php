@@ -11,37 +11,32 @@
           <i class="fa-solid fa-boxes-stacked me-2 text-2xl"></i>
           <span class="underline">在庫一覧</span>
         </a>
-        {{-- @include('livewire.purchase-cart') --}}
       </div>
     </div>
   </header>
 
   <div class="container mx-auto p-4 md:mt-24 mt-40">
-    <div class="flex justify-end space-x-2">
+    <div class="flex justify-end space-x-3">
       <a class="relative flex items-center text-xl bg-rose-600 px-3 text-white rounded-md py-2"
         href="{{ route('stockManager.delete') }}">
         <i class="fa-solid fa-trash text-xl me-2"></i>
         削除モード
       </a>
-      @include('livewire.add-product')
+      <a class="relative flex items-center text-xl bg-indigo-600 px-3 text-white rounded-md py-2"
+        href="{{ route('stockManager.add') }}">
+        <i class="fa-solid fa-plus text-2xl me-1"></i>
+        追加モード
+      </a>
     </div>
 
     <h1 class="text-2xl font-bold mb-4">在庫</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       @foreach ($this->productList as $product)
         <div class="bg-white p-4 rounded-lg shadow-md relative">
-          {{-- <div class="absolute top-0 right-0">
-            <button
-              class="bg-rose-800 text-white text-sm px-2 rounded-bl border hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-gray-500 transition ease-in-out duration-150"
-              wire:click="delete({{ $product->id }})">
-              <i class="fa-solid fa-trash text-white text-lg"></i>
-            </button>
-          </div> --}}
-
           <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
           <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
           <p class="text-lg font-medium text-right">
-            現在の在庫数:
+            在庫数:
             <span class="text-xl font-semibold">{{ number_format($product->stock?->count) }}</span>
           </p>
         </div>

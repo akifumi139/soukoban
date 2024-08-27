@@ -1,14 +1,14 @@
 <x-dialog wire:model="showAddModal">
   <x-dialog.open>
-    <button class="relative flex items-center text-xl bg-blue-600 px-3 text-white rounded-md py-2" type="button">
-      <i class="fa-solid fa-plus text-2xl me-1"></i>
-      追加する
+    <button class="p-4 h-24 rounded-l-full bg-green-300 shadow-lg items-center relative text-xl font-bold">
+      <i class="fa-solid fa-cart-plus text-3xl"></i>
+      <div>新規追加</div>
     </button>
   </x-dialog.open>
 
   <x-dialog.panel>
     <h2 class="text-2xl font-semibold text-slate-900 mb-4">資材の追加</h2>
-    <form wire:submit="add">
+    <form wire:submit="addCart">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-medium mb-2" for="name">名前</label>
         <input class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -26,7 +26,7 @@
       </div>
       <div class="flex justify-center">
         <button
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 md:text-xl focus:ring-blue-500"
           type="submit">
           登録する
         </button>
