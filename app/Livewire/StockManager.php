@@ -14,6 +14,9 @@ class StockManager extends Component
     #[Url]
     public string $search = '';
 
+    #[Url]
+    public string $mode = '追加';
+
     public ProductForm $form;
 
     public array $cart = [];

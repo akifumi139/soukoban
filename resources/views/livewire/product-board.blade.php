@@ -8,7 +8,7 @@
       <div class="flex flex-row md:items-center  md:space-y-0 md:space-x-3">
         <a class="text-xl font-bold text-sky-950 py-2 px-4 rounded flex items-center" href="{{ route('stockManager') }}">
           <i class="fa-solid fa-hammer me-2"></i>
-          <span class="underline">管理モード</span>
+          <span class="underline">管理</span>
         </a>
         <a class="text-xl font-bold text-teal-600 py-2 px-4 rounded flex items-center"
           href="{{ route('productHistory') }}">

@@ -14,7 +14,7 @@
     @foreach ($details as $log)
       <div class="grid grid-cols-2 border-b border-gray-300 bg-white p-4 rounded-md shadow-sm">
         <div class="text-gray-800 font-medium">
-          {{ $log->product->name }}
+          {{ $log->product?->name }}
         </div>
         <div class="text-gray-600 text-right">
           {{ $log->count }}個

@@ -29,6 +29,14 @@ class CheckoutAction
         });
     }
 
+    public function delete(): void
+    {
+        DB::transaction(function () {
+            Product::whereIn('id', array_keys($this->cart))->delete();
+            $this->logCartTransaction($this->cart, '削除');
+        });
+    }
+
     private function getProducts(array $productIds)
     {
         return Product::with('stock')
@@ -42,6 +50,7 @@ class CheckoutAction
             return [$product->id => $product->stock_count - $productCounts[$product->id]];
         });
     }
+
 
     private function updateProductStocks($remainingStock): void
     {
