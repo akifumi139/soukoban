@@ -61,6 +61,6 @@ class ProductForm extends Form
         });
 
 
-        $this->reset(['name', 'model_number', 'category', 'categoryId']);
+        $this->reset(['name', 'modelNumber', 'category', 'categoryId']);
     }
 }

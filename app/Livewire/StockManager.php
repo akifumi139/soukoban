@@ -45,6 +45,8 @@ class StockManager extends Component
 
     public function setProduct(int $id)
     {
+        $this->reset(['form.name', 'form.modelNumber', 'form.category', 'form.categoryId']);
+
         $product = $this->stocks->where('id', $id)->first();
 
         $this->form->setValue($product);
