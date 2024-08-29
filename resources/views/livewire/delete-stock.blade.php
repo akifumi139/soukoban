@@ -16,7 +16,7 @@
   </header>
 
   <div class="container mx-auto p-4 md:mt-24 mt-40">
-    <div class="flex justify-between space-x-2">
+    <div class="flex justify-between space-x-2 mb-4">
       <a class="relative flex items-center text-xl px-3 text-teal-600 font-bold rounded-md py-1"
         href="{{ route('stockManager') }}">
         <i class="fa-solid fa-chevron-left text-xl me-2"></i>
@@ -29,7 +29,6 @@
       </button>
     </div>
 
-    <h1 class="text-2xl font-bold mb-4">在庫</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       @foreach ($this->productList as $product)
         <div @class([
@@ -53,9 +52,10 @@
           </div>
 
           <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+          <p class="text-gray-700">カテゴリ: {{ $product->categories }}</p>
           <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
           <p class="text-lg font-medium text-right">
-            現在の在庫数:
+            在庫数:
             <span class="text-xl font-semibold">{{ $product->count }}</span>
           </p>
         </div>

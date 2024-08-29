@@ -44,6 +44,7 @@ class DeleteStock extends Component
                 'id' => $product->id,
                 'name' => $product->name,
                 'model_number' => $product->name,
+                'categories' => $product->categories->implode('label', ','),
                 'status' => $status,
                 'count' => number_format($product->stock?->count),
             ];

@@ -30,15 +30,40 @@
     </div>
 
     <h1 class="text-2xl font-bold mb-4">在庫</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      @foreach ($this->productList as $product)
-        <div class="bg-white p-4 rounded-lg shadow-md relative">
-          <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
-          <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
-          <p class="text-lg font-medium text-right">
-            在庫数:
-            <span class="text-xl font-semibold">{{ number_format($product->stock?->count) }}</span>
-          </p>
+    <div class="space-y-2">
+      @foreach ($this->productList as $category => $products)
+        <div
+          class="relative w-full mx-auto overflow-hidden text-sm font-normal bg-gray-200 border border-gray-200 divide-y divide-gray-200 rounded-md"
+          x-data="{
+              activeAccordion: '',
+              setActiveAccordion(id) {
+                  this.activeAccordion = (this.activeAccordion == id) ? '' : id
+              }
+          }">
+          <div class="cursor-pointer group" x-data="{ id: $id('{{ $category }}') }">
+            <button class="flex items-center justify-between w-full p-4 text-left select-none group-hover:underline"
+              @click="setActiveAccordion(id)">
+              <span class="text-xl font-bold">{{ $category }}</span>
+              <svg class="w-4 h-4 duration-200 ease-out" :class="{ 'rotate-180': activeAccordion == id }"
+                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 p-1" x-show="activeAccordion==id"
+              x-collapse x-cloak>
+              @foreach ($products as $product)
+                <div class="bg-white p-4 rounded-lg shadow-md relative">
+                  <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+                  <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
+                  <p class="text-lg font-medium text-right">
+                    在庫数:
+                    <span class="text-xl font-semibold">{{ number_format($product->stock?->count) }}</span>
+                  </p>
+                </div>
+              @endforeach
+            </div>
+          </div>
         </div>
       @endforeach
     </div>

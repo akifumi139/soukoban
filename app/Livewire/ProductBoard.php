@@ -33,9 +33,11 @@ class ProductBoard extends Component
     #[Computed]
     public function productList()
     {
-        return Product::with('stock')
+        $products = Product::with(['stock', 'categories'])
             ->search($this->search)
             ->get();
+
+        return $products->groupBy('first_category');
     }
 
 
