@@ -2,7 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\ProductForm;
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -11,6 +14,15 @@ class StockManager extends Component
 {
     #[Url]
     public string $search = '';
+
+    public ProductForm $form;
+
+    public Collection $categories;
+
+    public function mount()
+    {
+        $this->categories = Category::get();
+    }
 
     public function render()
     {
@@ -22,8 +34,30 @@ class StockManager extends Component
     {
         $products = Product::with(['stock', 'categories'])
             ->search($this->search)
+            ->orderBy('id')
             ->get();
 
         return $products->groupBy('first_category');
+    }
+
+    public function setProduct(int $id)
+    {
+        $product = Product::find($id);
+
+        $this->form->setValue($product);
+    }
+
+    public function update()
+    {
+        $this->form->categoryId =
+            $this->categories
+            ->where('label', $this->form->category)
+            ->first()
+            ?->id;
+
+        $this->form->update();
+
+        //フラグ式の切り替えだとモーダル内を押せなくなるため（Form入力ができない）
+        return to_route('stockManager');
     }
 }

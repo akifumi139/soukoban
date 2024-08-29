@@ -54,6 +54,9 @@
               x-collapse x-cloak>
               @foreach ($products as $product)
                 <div class="bg-white p-4 rounded-lg shadow-md relative">
+                  <div class="absolute top-0 right-0">
+                    @include('livewire.edit-product')
+                  </div>
                   <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
                   <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
                   <p class="text-lg font-medium text-right">
