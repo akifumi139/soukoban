@@ -19,9 +19,12 @@ class StockManager extends Component
 
     public Collection $categories;
 
+    public Collection $stocks;
+
     public function mount()
     {
         $this->categories = Category::get();
+        $this->stocks = Product::get();
     }
 
     public function render()
@@ -42,7 +45,7 @@ class StockManager extends Component
 
     public function setProduct(int $id)
     {
-        $product = Product::find($id);
+        $product = $this->stocks->where('id', $id)->first();
 
         $this->form->setValue($product);
     }
