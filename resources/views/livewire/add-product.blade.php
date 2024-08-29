@@ -20,6 +20,16 @@
           id="modelNumber" name="modelNumber" type="text" wire:model="form.modelNumber" placeholder="資材の型番" required>
       </div>
       <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-medium mb-2" for="category">カテゴリー</label>
+        <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          id="category" name="category" wire:model="form.category">
+          <option value="">選択してください</option>
+          @foreach ($categories as $category)
+            <option value="{{ $category }}">{{ $category }}</option>
+          @endforeach
+        </select>
+      </div>
+      <div class="mb-4">
         <label class="block text-gray-700 text-sm font-medium mb-2" for="count">個数</label>
         <input class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="count" name="count" type="number" placeholder="個数" min="1" wire:model="form.count" required>

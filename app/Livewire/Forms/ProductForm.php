@@ -15,6 +15,9 @@ class ProductForm extends Form
     #[Validate('required')]
     public string $modelNumber = '';
 
+    #[Validate('required')]
+    public string $category = '';
+
     #[Validate(['required', 'numeric'])]
     public int $count = 0;
 
@@ -29,6 +32,6 @@ class ProductForm extends Form
                 ->create(['count' => $this->count]);
         });
 
-        $this->reset(['name', 'modelNumber', 'count']);
+        $this->reset(['name', 'modelNumber', 'category', 'count']);
     }
 }

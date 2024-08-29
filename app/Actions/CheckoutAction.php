@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTransfer;
 use Illuminate\Support\Facades\Auth;
@@ -31,22 +32,35 @@ class CheckoutAction
 
     public function add(): void
     {
-        DB::transaction(function () {
+        $stocks = Product::get();
+        $categories = Category::get();
+
+        DB::transaction(function () use ($categories, $stocks) {
             $products = [];
-            foreach ($this->cart as $p) {
-                if ($p->status == '新規') {
+            foreach ($this->cart as $cartItem) {
+                if ($cartItem->status == '新規') {
                     $product = Product::create([
-                        'name' => $p->name,
-                        'model_number' => $p->model_number,
+                        'name' => $cartItem->name,
+                        'model_number' => $cartItem->model_number,
                     ]);
 
                     $product->stock()
-                        ->create(['count' => $p->count]);
+                        ->create(['count' => $cartItem->count]);
+
+                    $category =
+                        $categories
+                        ->where('label', $cartItem->category)
+                        ->first();
+                    $product->categories()
+                        ->sync($category->id);
                 } else {
-                    $product = Product::find($p->id);
-                    $currentStock = $product->StockCount;
+                    $product =
+                        $stocks
+                        ->where('id', $cartItem->id)
+                        ->first();
+
                     $product->stock()
-                        ->update(['count' => $currentStock + $p->count]);
+                        ->update(['count' => $product->StockCount + $cartItem->count]);
                 }
 
                 $products[] = [

@@ -20,6 +20,13 @@ class AddStock extends Component
 
     public array $cart = [];
 
+    public array $categories = [
+        '鉱石',
+        '食料',
+        '道具',
+        'その他',
+    ];
+
     public Collection $stocks;
 
     public bool $showAddCountModal;
@@ -49,11 +56,12 @@ class AddStock extends Component
                 'id' => $id,
                 'name' => $this->form->name,
                 'model_number' => $this->form->modelNumber,
+                'category' => $this->form->category,
                 'count' => $this->form->count,
                 'status' => $status,
             ];
 
-        $this->reset(['showAddModal', 'showAddCountModal', 'form.name', 'form.modelNumber', 'form.count']);
+        $this->reset(['showAddModal', 'showAddCountModal', 'form.name', 'form.modelNumber', 'form.category', 'form.count']);
     }
 
     public function addCountProduct()
