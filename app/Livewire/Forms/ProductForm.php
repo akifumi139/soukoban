@@ -11,7 +11,7 @@ use Livewire\Form;
 
 final class ProductForm extends Form
 {
-    public Product $product;
+    public ?Product $product;
 
     #[Validate('required')]
     public string $name = '';

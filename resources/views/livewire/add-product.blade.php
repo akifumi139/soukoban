@@ -25,7 +25,7 @@
           id="category" name="category" wire:model="form.category">
           <option value="">選択してください</option>
           @foreach ($categories as $category)
-            <option value="{{ $category }}">{{ $category }}</option>
+            <option value="{{ $category->label }}">{{ $category->label }}</option>
           @endforeach
         </select>
       </div>

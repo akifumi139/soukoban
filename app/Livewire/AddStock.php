@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Actions\CheckoutAction;
+use App\Actions\AddAction;
 use App\Livewire\Forms\ProductForm;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Url;
@@ -13,8 +14,6 @@ use Livewire\Component;
 
 final class AddStock extends Component
 {
-    public string $selectedProduct = '';
-
     #[Url]
     public string $search = '';
 
@@ -22,23 +21,21 @@ final class AddStock extends Component
 
     public array $cart = [];
 
-    public array $categories = [
-        '鉱石',
-        '食料',
-        '道具',
-        'その他',
-    ];
+    public Collection $categories;
 
     public Collection $stocks;
 
-    public bool $showAddCountModal;
+    public bool $showAddModal = false;
+
+    public bool $showAddCountModal = false;
+
+    public string $selectedProduct = '';
 
     public function mount()
     {
-        $this->stocks = Product::get();
+        $this->categories = Category::get()->keyBy('label');
+        $this->stocks = Product::get()->keyBy('id');
     }
-
-    public bool $showAddModal = false;
 
     public function render()
     {
@@ -58,34 +55,38 @@ final class AddStock extends Component
             = (object) [
                 'id' => $id,
                 'name' => $this->form->name,
-                'model_number' => $this->form->modelNumber,
+                'modelNumber' => $this->form->modelNumber,
                 'category' => $this->form->category,
+                'categoryId' => $this->categories->get($this->form->category),
                 'count' => $this->form->count,
                 'status' => $status,
             ];
 
-        $this->reset(['showAddModal', 'showAddCountModal', 'form.name', 'form.modelNumber', 'form.category', 'form.count']);
+        $this->reset(['showAddModal', 'showAddCountModal']);
+        $this->form->reset();
     }
 
-    public function addCountProduct()
+    public function addCountProduct(): void
     {
-        $product = $this->stocks->where('id', $this->selectedProduct)->first();
+        $product = $this->stocks->get($this->selectedProduct);
 
-        $this->form->name = $product->name;
-        $this->form->modelNumber = $product->model_number;
+        if (is_null($product)) {
+            return;
+        }
 
+        $this->form->setValue($product);
         $this->addCart($product->id);
     }
 
-    public function removeCart(int $id)
+    public function removeCart(int $id): void
     {
         unset($this->cart[$id]);
     }
 
     public function add()
     {
-        $checkout = new CheckoutAction($this->cart);
-        $checkout->add();
+        $checkout = new AddAction($this->cart);
+        $checkout->exec();
 
         return to_route('stockManager');
     }

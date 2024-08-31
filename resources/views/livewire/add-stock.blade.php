@@ -45,7 +45,7 @@
             </button>
           </div>
           <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
-          <p class="text-gray-700 mb-2">型番: {{ $product->model_number }}</p>
+          <p class="text-gray-700 mb-2">型番: {{ $product->modelNumber }}</p>
           <p class="text-lg font-medium text-right">
             個数:
             <span class="text-xl font-semibold">{{ $product->count }}</span>
