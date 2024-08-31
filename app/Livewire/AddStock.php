@@ -85,6 +85,10 @@ final class AddStock extends Component
 
     public function add()
     {
+        if (empty($this->cart)) {
+            return;
+        }
+
         $checkout = new AddAction($this->cart);
         $checkout->exec();
 
