@@ -87,11 +87,11 @@ final class ProductBoard extends Component
         unset($this->cart[$id]);
     }
 
-    public function bringOut()
+    public function bringOut(): void
     {
         $checkout = new CheckoutAction($this->cart);
 
-        $checkout->run();
+        $checkout->bringOut();
 
         $this->reset(['showModal', 'cart']);
     }

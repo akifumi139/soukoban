@@ -19,7 +19,10 @@ final class CheckoutAction
         $this->cart = $cart;
     }
 
-    public function run(): void
+    /**
+     * 「持ち出し」を異動履歴に追加する
+     */
+    public function bringOut(): void
     {
         $productCounts = array_column($this->cart, 'count', 'product_id');
         $products = $this->getProducts(array_keys($productCounts));
