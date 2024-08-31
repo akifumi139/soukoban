@@ -7,7 +7,6 @@ namespace App\Actions;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductTransfer;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 final class CheckoutAction
@@ -17,22 +16,6 @@ final class CheckoutAction
     public function __construct($cart)
     {
         $this->cart = $cart;
-    }
-
-    /**
-     * 「持ち出し」を異動履歴に追加する
-     */
-    public function bringOut(): void
-    {
-        $productCounts = array_column($this->cart, 'count', 'product_id');
-        $products = $this->getProducts(array_keys($productCounts));
-
-        $remainingStock = $this->calcRemainingStock($products, $productCounts);
-
-        DB::transaction(function () use ($remainingStock) {
-            $this->updateProductStocks($remainingStock);
-            $this->logCartTransaction($this->cart, '持ち出し');
-        });
     }
 
     public function add(): void
@@ -75,7 +58,7 @@ final class CheckoutAction
                 ];
             }
 
-            $this->logCartTransaction($products, '追加');
+            ProductTransfer::recordCartHistory($products, '追加');
         });
     }
 
@@ -83,7 +66,7 @@ final class CheckoutAction
     {
         DB::transaction(function () {
             Product::whereIn('id', array_keys($this->cart))->delete();
-            $this->logCartTransaction($this->cart, '削除');
+            ProductTransfer::recordCartHistory($this->cart, '削除');
         });
     }
 
@@ -103,6 +86,7 @@ final class CheckoutAction
 
     private function updateProductStocks($remainingStock): void
     {
+
         $caseStatements = $remainingStock->map(function ($stockCount, $productId) {
             return "WHEN product_id = {$productId} THEN {$stockCount}";
         })->implode(' ');
@@ -117,15 +101,5 @@ final class CheckoutAction
             END
             WHERE product_id IN ({$productIds})
         ");
-    }
-
-    private function logCartTransaction(array $cart, string $action): void
-    {
-        $transaction = ProductTransfer::create([
-            'user_id' => Auth::id(),
-            'action' => $action,
-        ]);
-
-        $transaction->details()->createMany($cart);
     }
 }

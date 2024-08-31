@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Actions\CheckoutAction;
+use App\Actions\BringOutAction;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Computed;
@@ -89,9 +89,9 @@ final class ProductBoard extends Component
 
     public function bringOut(): void
     {
-        $checkout = new CheckoutAction($this->cart);
+        $checkout = new BringOutAction($this->cart);
 
-        $checkout->bringOut();
+        $checkout->exec();
 
         $this->reset(['showModal', 'cart']);
     }
