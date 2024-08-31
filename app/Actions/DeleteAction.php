@@ -4,24 +4,20 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use App\Enums\CartActionStatus;
 use App\Models\Product;
 use App\Models\ProductTransfer;
 use Illuminate\Support\Facades\DB;
 
-final class CheckoutAction
+final class DeleteAction
 {
-    public array $cart;
+    public function __construct(private array $cart) {}
 
-    public function __construct($cart)
-    {
-        $this->cart = $cart;
-    }
-
-    public function delete(): void
+    public function exec()
     {
         DB::transaction(function () {
             Product::whereIn('id', array_keys($this->cart))->delete();
-            ProductTransfer::recordCartHistory($this->cart, '削除');
+            ProductTransfer::recordCartHistory($this->cart, CartActionStatus::REMOVAL);
         });
     }
 }

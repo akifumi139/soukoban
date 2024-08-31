@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
-use App\Actions\CheckoutAction;
+use App\Actions\DeleteAction;
 use App\Livewire\Forms\ProductForm;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
@@ -76,8 +76,8 @@ final class DeleteStock extends Component
 
     public function delete()
     {
-        $checkout = new CheckoutAction($this->cart);
-        $checkout->delete();
+        $checkout = new DeleteAction($this->cart);
+        $checkout->exec();
 
         return to_route('stockManager');
     }
