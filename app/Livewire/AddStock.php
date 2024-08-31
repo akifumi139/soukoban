@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Actions\CheckoutAction;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class AddStock extends Component
+final class AddStock extends Component
 {
     public string $selectedProduct = '';
 
@@ -35,6 +37,7 @@ class AddStock extends Component
     {
         $this->stocks = Product::get();
     }
+
     public bool $showAddModal = false;
 
     public function render()
@@ -42,7 +45,7 @@ class AddStock extends Component
         return view('livewire.add-stock');
     }
 
-    public function addCart(int $id = null)
+    public function addCart(?int $id = null)
     {
         if (is_null($id)) {
             $id = now()->format('YmdHis');

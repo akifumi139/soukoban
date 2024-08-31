@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
 use App\Models\Product;
@@ -7,9 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class ProductForm extends Form
+final class ProductForm extends Form
 {
     public Product $product;
+
     #[Validate('required')]
     public string $name = '';
 
@@ -18,6 +21,7 @@ class ProductForm extends Form
 
     #[Validate('required')]
     public string $category = '';
+
     public ?int $categoryId = null;
 
     #[Validate(['required', 'numeric'])]
@@ -59,7 +63,6 @@ class ProductForm extends Form
                 ->categories()
                 ->sync($this->categoryId);
         });
-
 
         $this->reset(['name', 'modelNumber', 'category', 'categoryId']);
     }

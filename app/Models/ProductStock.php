@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductStock extends Model
+final class ProductStock extends Model
 {
     use HasFactory;
 

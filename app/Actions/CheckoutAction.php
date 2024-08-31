@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions;
 
 use App\Models\Category;
@@ -8,7 +10,7 @@ use App\Models\ProductTransfer;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class CheckoutAction
+final class CheckoutAction
 {
     public array $cart;
 
@@ -49,15 +51,15 @@ class CheckoutAction
 
                     $category =
                         $categories
-                        ->where('label', $cartItem->category)
-                        ->first();
+                            ->where('label', $cartItem->category)
+                            ->first();
                     $product->categories()
                         ->sync($category->id);
                 } else {
                     $product =
                         $stocks
-                        ->where('id', $cartItem->id)
-                        ->first();
+                            ->where('id', $cartItem->id)
+                            ->first();
 
                     $product->stock()
                         ->update(['count' => $product->StockCount + $cartItem->count]);
@@ -73,7 +75,6 @@ class CheckoutAction
             $this->logCartTransaction($products, '追加');
         });
     }
-
 
     public function delete(): void
     {
@@ -96,7 +97,6 @@ class CheckoutAction
             return [$product->id => $product->stock_count - $productCounts[$product->id]];
         });
     }
-
 
     private function updateProductStocks($remainingStock): void
     {

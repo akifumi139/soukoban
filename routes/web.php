@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\AuthController;
 use App\Livewire\AddStock;
 use App\Livewire\DeleteStock;
@@ -15,7 +17,6 @@ Route::controller(AuthController::class)
         Route::post('login', 'login')->name('login');
     });
 
-
 Route::middleware('auth')->group(function () {
     Route::prefix('在庫管理')
         ->name('stockManager')
@@ -25,7 +26,6 @@ Route::middleware('auth')->group(function () {
             Route::get('delete', DeleteStock::class)->name('.delete');
         });
 
-
     Route::prefix('在庫一覧')
         ->name('productBoard')
         ->get('/', ProductBoard::class);
@@ -34,7 +34,6 @@ Route::middleware('auth')->group(function () {
         ->name('productHistory')
         ->get('/', ProductHistory::class);
 });
-
 
 Livewire::setUpdateRoute(function ($handle) {
     return Route::post('/soukoban/livewire/update', $handle);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Actions\CheckoutAction;
@@ -10,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class DeleteStock extends Component
+final class DeleteStock extends Component
 {
     #[Url]
     public string $search = '';
@@ -34,13 +36,14 @@ class DeleteStock extends Component
     #[Computed]
     public function productList()
     {
-        $products =  Product::with('stock')
+        $products = Product::with('stock')
             ->search($this->search)
             ->get();
 
         return $products->map(function ($product) {
             $status = in_array($product->id, array_keys($this->cart), true) ? '削除候補' : '';
-            return (object)[
+
+            return (object) [
                 'id' => $product->id,
                 'name' => $product->name,
                 'model_number' => $product->name,
@@ -55,7 +58,7 @@ class DeleteStock extends Component
     {
         $product = $this->products->where('id', $id)->first();
 
-        if (!$product) {
+        if (! $product) {
             return;
         }
 

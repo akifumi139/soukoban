@@ -22,7 +22,8 @@
 				"pgl.laravel-jump-controller",
 				"bradlc.vscode-tailwindcss",
 				"shufo.vscode-blade-formatter",
-				"streetsidesoftware.code-spell-checker"
+				"streetsidesoftware.code-spell-checker",
+				"open-southeners.laravel-pint"
 			],
 			"settings": {}
 		}

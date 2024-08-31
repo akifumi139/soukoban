@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
-class LoginRequest extends FormRequest
+final class LoginRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -30,7 +32,7 @@ class LoginRequest extends FormRequest
      */
     public function authenticate()
     {
-        if (!Auth::guard('web')->attempt($this->only('name', 'password'))) {
+        if (! Auth::guard('web')->attempt($this->only('name', 'password'))) {
             throw ValidationException::withMessages([
                 'error' => 'ユーザーID・パスワードが間違っています。',
             ]);

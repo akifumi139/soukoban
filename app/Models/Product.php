@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+final class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -14,7 +16,7 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'model_number'
+        'model_number',
     ];
 
     public function scopeSearch($query, ?string $searchTerm)
@@ -25,8 +27,8 @@ class Product extends Model
 
         return
             $query
-            ->where('name', 'like', "%{$searchTerm}%")
-            ->orWhere('model_number', 'like', "%{$searchTerm}%");
+                ->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('model_number', 'like', "%{$searchTerm}%");
     }
 
     public function getStockCountAttribute()

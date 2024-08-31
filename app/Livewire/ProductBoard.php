@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Actions\CheckoutAction;
@@ -9,7 +11,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class ProductBoard extends Component
+final class ProductBoard extends Component
 {
     #[Url]
     public string $search = '';
@@ -40,12 +42,11 @@ class ProductBoard extends Component
         return $products->groupBy('first_category');
     }
 
-
     #[Computed]
     public function cartCount()
     {
         return array_reduce($this->cart, function ($carry, $item) {
-            return  $carry + $item['count'];
+            return $carry + $item['count'];
         }, 0);
     }
 
@@ -53,7 +54,7 @@ class ProductBoard extends Component
     {
         $product = $this->products->where('id', $id)->first();
 
-        if (!$product || $product->stock_count === 0) {
+        if (! $product || $product->stock_count === 0) {
             return;
         }
 
@@ -70,7 +71,7 @@ class ProductBoard extends Component
 
     public function subCart(int $id): void
     {
-        if (!array_key_exists($id, $this->cart)) {
+        if (! array_key_exists($id, $this->cart)) {
             return;
         }
 

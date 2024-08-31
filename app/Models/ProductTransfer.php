@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductTransfer extends Model
+final class ProductTransfer extends Model
 {
     use HasFactory;
 
@@ -13,7 +15,7 @@ class ProductTransfer extends Model
 
     protected $fillable = [
         'user_id',
-        'action'
+        'action',
     ];
 
     public function user()

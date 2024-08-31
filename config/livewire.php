@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -171,6 +173,5 @@ return [
 
     'pagination_theme' => 'tailwind',
 
-
-    'asset_url' => env('APP_URL') . '/livewire/livewire.js',
+    'asset_url' => env('APP_URL').'/livewire/livewire.js',
 ];

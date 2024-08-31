@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 
-class AuthController
+final class AuthController
 {
     public function index()
     {

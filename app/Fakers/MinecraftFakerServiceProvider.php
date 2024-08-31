@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Fakers;
 
 use Faker\Provider\Base;
 
-class MinecraftFakerServiceProvider extends Base
+final class MinecraftFakerServiceProvider extends Base
 {
     protected static $terms = [
         'ダイヤモンド',
@@ -36,6 +38,6 @@ class MinecraftFakerServiceProvider extends Base
 
     public function minecraftItem()
     {
-        return static::randomElement(static::$terms);
+        return self::randomElement(self::$terms);
     }
 }

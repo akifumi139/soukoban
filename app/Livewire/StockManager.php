@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire;
 
 use App\Livewire\Forms\ProductForm;
@@ -10,7 +12,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class StockManager extends Component
+final class StockManager extends Component
 {
     #[Url]
     public string $search = '';
@@ -56,8 +58,8 @@ class StockManager extends Component
     {
         $this->form->categoryId =
             $this->categories
-            ->where('label', $this->form->category)
-            ->first()
+                ->where('label', $this->form->category)
+                ->first()
             ?->id;
 
         $this->form->update();
