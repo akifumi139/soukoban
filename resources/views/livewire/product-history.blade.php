@@ -24,7 +24,8 @@
               <div @class([
                   'border-2 rounded-full text-center w-24',
                   'border-orange-400 bg-orange-100' => $history->action == '持ち出し',
-                  'border-rose-400 bg-rose-100' => $history->action == '削除',
+                  'border-rose-400 bg-rose-100' => $history->action == '撤去',
+                  'border-indigo-400 bg-indigo-100' => $history->action == '搬入',
               ])>
                 {{ $history->action }}
               </div>
