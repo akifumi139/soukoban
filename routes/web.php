@@ -13,7 +13,7 @@ use Livewire\Livewire;
 
 Route::controller(AuthController::class)
     ->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/', 'index')->name('login');
         Route::post('login', 'login')->name('login');
     });
 
