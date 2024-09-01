@@ -3,5 +3,19 @@
     "editor.formatOnSave": true,
     "[php]": {
         "editor.defaultFormatter": "open-southeners.laravel-pint"
-    }
+    },
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter",
+    },
+    "bladeFormatter.format.enabled": true,
+    "bladeFormatter.format.indentSize": 2,
+    "bladeFormatter.format.useTabs": false,
+    "bladeFormatter.format.indentInnerHtml": false,
+    "bladeFormatter.format.noMultipleEmptyLines": true,
+    "bladeFormatter.format.noPhpSyntaxCheck": false,
+    "bladeFormatter.format.noSingleQuote": false,
+    "bladeFormatter.format.sortHtmlAttributes": "code-guide",
+    "bladeFormatter.format.sortTailwindcssClasses": true,
+    "bladeFormatter.format.wrapAttributes": "auto",
+    "bladeFormatter.format.wrapLineLength": 120,
 }
