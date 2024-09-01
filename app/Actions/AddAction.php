@@ -13,15 +13,18 @@ use Illuminate\Support\Facades\DB;
 
 final class AddAction
 {
+    private Collection $categories;
+
     public function __construct(private array $cart) {}
 
     public function exec(): void
     {
         $stocks = Product::get()->keyBy('id');
 
-        $this->insetNewCategory();
-
         DB::transaction(function () use ($stocks) {
+            $this->insetNewCategory();
+            $this->categories = Category::get()->keyBy('label');
+
             $products = [];
 
             foreach ($this->cart as $cartItem) {
@@ -57,6 +60,8 @@ final class AddAction
     private function handleCartItem(object $cartItem, Collection $stocks): Product
     {
         if ($cartItem->status == '新規') {
+            $cartItem->categoryId = $this->categories->get($cartItem->category);
+
             $product = $this->createProduct($cartItem);
         } else {
             $product = $this->updateProductStock($cartItem, $stocks);

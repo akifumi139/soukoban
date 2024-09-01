@@ -19,15 +19,25 @@
         <input class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           id="modelNumber" name="modelNumber" type="text" wire:model="form.modelNumber" placeholder="資材の型番" required>
       </div>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-medium mb-2" for="category">カテゴリー</label>
-        <select class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          id="category" name="category" wire:model="form.category">
-          <option value="">選択してください</option>
-          @foreach ($categories as $category)
-            <option value="{{ $category->label }}">{{ $category->label }}</option>
-          @endforeach
-        </select>
+      <div class="relative mb-4" x-data="{ show: false }">
+        <label class="block text-gray-700 text-sm font-medium mb-2" for="modelNumber">カテゴリー</label>
+        <input class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="text" wire:model="form.category" @focus="show = true" @blur="setTimeout(() => show = false, 100)"
+          required />
+        <div class="absolute shadow bg-white overflow-y-auto mt-1 max-h-40 scroll w-full left-0 rounded max-h-select"
+          x-show="show" x-transition>
+          <div class="flex flex-col w-full">
+            @foreach ($this->filleterCategories as $index => $category)
+              <div
+                class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100"
+                wire:click="selectCategory('{{ $category->label }}')">
+                <div class="w-full items-center flex">
+                  {{ $category->label }}
+                </div>
+              </div>
+            @endforeach
+          </div>
+        </div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-medium mb-2" for="count">個数</label>

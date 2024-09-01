@@ -9,6 +9,7 @@ use App\Livewire\Forms\ProductForm;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -40,6 +41,17 @@ final class AddStock extends Component
     public function render()
     {
         return view('livewire.add-stock');
+    }
+
+    public function selectCategory($option)
+    {
+        $this->form->category = $option;
+    }
+
+    #[Computed]
+    public function filleterCategories()
+    {
+        return Category::get();
     }
 
     public function addCart(?int $id = null)
