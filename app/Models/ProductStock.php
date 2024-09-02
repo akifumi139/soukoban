@@ -29,7 +29,7 @@ final class ProductStock extends Model
             return "WHEN product_id = {$productId} THEN {$count}";
         }, $countList, array_keys($countList));
 
-        $caseStatement = implode(',', $caseStatementList);
+        $caseStatement = implode(' ', $caseStatementList);
         $conditionStatement = implode(',', array_keys($countList));
 
         DB::update("
