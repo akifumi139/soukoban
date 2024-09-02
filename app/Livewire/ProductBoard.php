@@ -94,5 +94,7 @@ final class ProductBoard extends Component
         $checkout->exec();
 
         $this->reset(['showModal', 'cart']);
+
+        session()->flash('message', '持ち出しを承りました。');
     }
 }
