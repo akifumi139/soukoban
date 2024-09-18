@@ -30,7 +30,7 @@ final class DeleteStock extends Component
 
     public function render()
     {
-        return view('livewire.delete-stock');
+        return view('livewire.room-manager.product.delete');
     }
 
     #[Computed]
@@ -79,6 +79,6 @@ final class DeleteStock extends Component
         $checkout = new DeleteAction($this->cart);
         $checkout->exec();
 
-        return to_route('stockManager');
+        return to_route('roomManager');
     }
 }

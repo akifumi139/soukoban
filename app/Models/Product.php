@@ -36,6 +36,11 @@ final class Product extends Model
         return $this->stock->count;
     }
 
+    public function stuff()
+    {
+        return $this->hasOne(ToolBox::class);
+    }
+
     public function stock()
     {
         return $this->hasOne(ProductStock::class);

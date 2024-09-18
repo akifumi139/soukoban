@@ -3,36 +3,45 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
-use App\Livewire\AddStock;
 use App\Livewire\DeleteStock;
-use App\Livewire\ProductBoard;
-use App\Livewire\ProductHistory;
-use App\Livewire\StockManager;
+use App\Livewire\MovementHistory;
+use App\Livewire\MyStuff;
+use App\Livewire\RoomManager\AddStock;
+use App\Livewire\RoomManager\CategoryManager;
+use App\Livewire\RoomManager\StockManager;
+use App\Livewire\Stockroom;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
 Route::controller(AuthController::class)
     ->group(function () {
         Route::get('/', 'index')->name('login');
+        Route::get('/login', 'index')->name('login');
         Route::post('login', 'login')->name('login');
     });
 
 Route::middleware('auth')->group(function () {
-    Route::prefix('在庫管理')
-        ->name('stockManager')
+    Route::prefix('roomManager')
+        ->name('roomManager')
         ->group(function () {
             Route::get('/', StockManager::class);
             Route::get('add', AddStock::class)->name('.add');
             Route::get('delete', DeleteStock::class)->name('.delete');
+            Route::get('categories/manager', CategoryManager::class)->name('.category');
         });
 
-    Route::prefix('在庫一覧')
-        ->name('productBoard')
-        ->get('/', ProductBoard::class);
+    Route::prefix('stockroom')
+        ->name('stockroom')
+        ->get('/', Stockroom::class);
 
-    Route::prefix('移動履歴')
-        ->name('productHistory')
-        ->get('/', ProductHistory::class);
+    Route::prefix('myStuff')
+        ->name('myStuff')
+        ->get('/', MyStuff::class);
+
+    Route::prefix('history')
+        ->name('history')
+        ->get('/', MovementHistory::class);
+
 });
 
 Livewire::setUpdateRoute(function ($handle) {

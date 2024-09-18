@@ -12,24 +12,24 @@ use App\Models\ToolBox;
 use Illuminate\Support\Facades\DB;
 
 /**
- * 「持ち出し」を異動履歴に追加する
+ * 「返却」を異動履歴に追加する
  */
-final class BringOutAction
+final class GiveBackAction
 {
     public function __construct(private array $cart) {}
 
     public function exec(): void
     {
-        $remainingStock = $this->calcRemainingStock();
+        $remainingStock = $this->calcStock();
 
         DB::transaction(function () use ($remainingStock) {
             ProductStock::updateCounts($remainingStock);
-            ToolBox::add($this->cart);
-            ProductTransfer::recordCartHistory($this->cart, CartActionStatus::BRING_OUT);
+            ToolBox::remove($this->cart);
+            ProductTransfer::recordCartHistory($this->cart, CartActionStatus::GIVEBACK);
         });
     }
 
-    private function calcRemainingStock(): array
+    private function calcStock(): array
     {
         $ids = array_column($this->cart, 'product_id');
         $products = Product::with('stock')
@@ -38,7 +38,7 @@ final class BringOutAction
             ->keyBy('id');
 
         return $products->mapWithKeys(function ($product) {
-            return [$product->id => $product->stock_count - $this->cart[$product->id]['count']];
+            return [$product->id => $product->stock_count + $this->cart[$product->id]['count']];
         })->toArray();
     }
 }

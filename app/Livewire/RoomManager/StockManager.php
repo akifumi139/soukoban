@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire;
+namespace App\Livewire\RoomManager;
 
 use App\Livewire\Forms\ProductForm;
 use App\Models\Category;
@@ -31,7 +31,7 @@ final class StockManager extends Component
 
     public function render()
     {
-        return view('livewire.stock-manager');
+        return view('livewire.room-manager.index');
     }
 
     #[Computed]
@@ -65,6 +65,6 @@ final class StockManager extends Component
         $this->form->update();
 
         //フラグ式の切り替えだとモーダル内を押せなくなるため（Form入力ができない）
-        return to_route('stockManager');
+        return to_route('roomManager');
     }
 }

@@ -18,6 +18,6 @@ final class AuthController
         $request->authenticate();
         $request->session()->regenerate();
 
-        return to_route('productBoard');
+        return to_route('myStuff');
     }
 }

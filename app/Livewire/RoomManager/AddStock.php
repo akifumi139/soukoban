@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire;
+namespace App\Livewire\RoomManager;
 
 use App\Actions\AddAction;
 use App\Livewire\Forms\ProductForm;
@@ -40,7 +40,7 @@ final class AddStock extends Component
 
     public function render()
     {
-        return view('livewire.add-stock');
+        return view('livewire.room-manager.product.add.index');
     }
 
     public function selectCategory($option)
@@ -104,6 +104,6 @@ final class AddStock extends Component
         $checkout = new AddAction($this->cart);
         $checkout->exec();
 
-        return to_route('stockManager');
+        return to_route('roomManager');
     }
 }

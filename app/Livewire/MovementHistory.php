@@ -8,7 +8,7 @@ use App\Models\ProductTransfer;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-final class ProductHistory extends Component
+final class MovementHistory extends Component
 {
     use WithPagination;
 
@@ -18,6 +18,6 @@ final class ProductHistory extends Component
             ProductTransfer::orderByDesc('created_at')
                 ->paginate(10);
 
-        return view('livewire.product-history', ['histories' => $histories]);
+        return view('livewire.movement-history.index', ['histories' => $histories]);
     }
 }

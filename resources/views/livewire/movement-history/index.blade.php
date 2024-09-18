@@ -1,25 +1,14 @@
-<div class="bg-gray-100">
-  <header class="bg-white shadow-md fixed top-0 left-0 right-0 z-20">
-    <div class="container mx-auto p-4 flex flex-col md:flex-row items-center justify-between">
-      <h1 class="text-2xl font-bold md:block hidden">○○倉庫</h1>
-      <input
-        class="w-full md:max-w-md p-3 border bg-gray-200 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-        type="text" wire:model.change="search" placeholder="履歴検索...(はりぼて)">
-      <div class="flex flex-row md:items-center  md:space-y-0 md:space-x-3">
-        <a class="text-xl font-bold text-indigo-600 py-2 px-4 rounded flex items-center"
-          href="{{ route('productBoard') }}">
-          <i class="fa-solid fa-boxes-stacked me-2 text-2xl"></i>
-          <span class="underline">在庫一覧</span>
-        </a>
-      </div>
-    </div>
+<div class="flex min-h-screen flex-col bg-blue-100">
+  <header class="fixed left-0 right-0 top-0 z-20 block bg-white text-gray-200 shadow-md">
+    @include('components.layouts.profile')
+    @include('components.layouts.history-search')
   </header>
-  <main class="container mx-auto p-4 md:mt-24 mt-36  md:max-w-[800px]">
-    <div class="overflow-x-auto mx-auto">
-      <h2 class="text-xl font-bold mb-2 ms-2">履歴</h2>
-      <div class="bg-white border border-gray-200">
+  <main class="container mx-auto mt-36 p-4 md:mt-24 md:max-w-[800px]">
+    <div class="mx-auto overflow-x-auto">
+      <h2 class="mb-2 ms-2 text-xl font-bold">履歴</h2>
+      <div class="border border-gray-200 bg-white">
         @foreach ($histories as $history)
-          <div class="grid grid-cols-2 md:grid-cols-6 border-b">
+          <div class="grid grid-cols-2 border-b md:grid-cols-6">
             <div class="px-3 py-2 md:col-span-4">
               <div @class([
                   'border-2 rounded-full text-center w-24',
@@ -32,14 +21,14 @@
               <div class="mx-2 my-2 break-words">
                 {{ $history->details->pluck('product.name')->implode(',') }}
               </div>
-              @include('livewire.history-detail', [
+              @include('livewire.movement-history.show', [
                   'createAt' => $history->created_at->isoFormat('YYYY/MM/DD(ddd)'),
                   'userName' => $history->user->name,
                   'action' => $history->action,
                   'details' => $history->details,
               ])
             </div>
-            <div class="p-3 text-right md:col-span-2 items-center my-auto flex-col">
+            <div class="my-auto flex-col items-center p-3 text-right md:col-span-2">
               <div class="md:text-lg">{{ $history->user->name }}</div>
               <div>
                 <div>{{ $history->created_at->isoFormat('YYYY/MM/DD(ddd)') }}</div>
