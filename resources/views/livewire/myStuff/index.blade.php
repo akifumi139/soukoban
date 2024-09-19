@@ -72,7 +72,7 @@
   </main>
 
   <div class="fixed bottom-4 right-2">
-    <button class="rounded-full bg-teal-500 p-3 text-2xl text-white shadow-lg hover:bg-teal-600 focus:outline-none"
+    <button class="rounded-full bg-teal-500 p-3 text-4xl text-white shadow-lg hover:bg-teal-600 focus:outline-none"
       @click="open = true">
       <i class="fa-solid fa-dolly"></i>
       <template x-if="totalCount() > 0">

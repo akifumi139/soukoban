@@ -1,4 +1,4 @@
-<div class="flex min-h-screen flex-col bg-blue-100" x-data="cartComponent()">
+<div class="flex min-h-screen flex-col bg-teal-100" x-data="cartComponent()">
   <header class="fixed left-0 right-0 top-0 z-20 block bg-white text-gray-200 shadow-md">
     @include('components.layouts.profile')
     @include('components.layouts.search')
@@ -76,7 +76,7 @@
   </main>
 
   <div class="fixed bottom-4 right-2">
-    <button class="rounded-full bg-sky-500 p-3 text-2xl text-white shadow-lg hover:bg-teal-600 focus:outline-none"
+    <button class="rounded-full bg-sky-500 p-3 text-4xl text-white shadow-lg hover:bg-teal-600 focus:outline-none"
       @click="open = true">
       <i class="fa-solid fa-dolly fa-flip-horizontal"></i>
       <template x-if="totalCount() > 0">
