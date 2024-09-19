@@ -83,7 +83,7 @@
       </template>
     </button>
     <div class="modal" :class="{ 'active': open }" @click.self="">
-      @include('livewire.myStuff.cart')
+      @include('livewire.my-stuff.cart')
     </div>
   </div>
 

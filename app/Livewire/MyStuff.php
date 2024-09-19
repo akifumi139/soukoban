@@ -16,7 +16,7 @@ final class MyStuff extends Component
 
     public function render()
     {
-        return view('livewire.myStuff.index');
+        return view('livewire.my-stuff.index');
     }
 
     #[Computed]
