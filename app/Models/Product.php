@@ -38,7 +38,7 @@ final class Product extends Model
 
     public function stuff()
     {
-        return $this->hasOne(ToolBox::class);
+        return $this->hasMany(ToolBox::class);
     }
 
     public function stock()

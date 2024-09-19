@@ -41,17 +41,22 @@ final class ToolBox extends Model
     public static function remove(array $cart): void
     {
         foreach ($cart as $return) {
-            $toolBox = ToolBox::where('product_id', $return['product_id'])->first();
+            $toolBoxes = ToolBox::where('product_id', $return['product_id'])
+                ->orderBy('id')
+                ->get();
 
-            if ($toolBox) {
+            $returnCount = $return['count'];
+
+            foreach ($toolBoxes as $toolBox) {
                 $currentCount = $toolBox->count;
-                $returnCount = $return['count'];
 
                 if ($returnCount >= $currentCount) {
+                    $returnCount -= $currentCount;
                     $toolBox->delete();
                 } else {
                     $toolBox->count -= $returnCount;
                     $toolBox->save();
+                    break;
                 }
             }
         }

@@ -42,7 +42,7 @@
                   <div class="absolute right-0 top-0">
                     <button
                       class="rounded-bl border bg-cyan-600 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                      @click="addToCart({{ $product->id }}, '{{ $product->name }}', '{{ $product->model_number }}', '{{ number_format($product->stuff->count) }}')">
+                      @click="addToCart({{ $product->id }}, '{{ $product->name }}', '{{ $product->model_number }}', '{{ number_format($product->stuff->sum('count')) }}')">
                       <i class="fa-solid fa-plus text-lg text-white"></i>
                     </button>
                     <button
@@ -55,7 +55,7 @@
                   <p class="mb-2 text-gray-700">型番　: {{ $product->model_number }}</p>
                   <p class="text-right text-lg font-medium">
                     所持数:
-                    <span class="text-xl font-semibold">{{ number_format($product->stuff->count) }}</span>
+                    <span class="text-xl font-semibold">{{ number_format($product->stuff->sum('count')) }}</span>
                   </p>
                   <p class="text-right text-lg font-medium">
                     返却数:
