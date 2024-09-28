@@ -9,12 +9,9 @@ use Illuminate\Database\Seeder;
 
 final class CategorySeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $categoryLabels = [
+        $categories = [
             '鉱石',
             '食料',
             '道具',
@@ -22,10 +19,8 @@ final class CategorySeeder extends Seeder
         ];
 
         $params = array_map(function ($category) {
-            return [
-                'label' => $category,
-            ];
-        }, $categoryLabels);
+            return ['name' => $category];
+        }, $categories);
 
         Category::insert($params);
     }

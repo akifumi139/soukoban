@@ -1,4 +1,4 @@
-<div class="flex min-h-screen flex-col bg-blue-100">
+<div class="flex min-h-screen flex-col bg-white">
   <header class="fixed left-0 right-0 top-0 z-20 block bg-white text-gray-200 shadow-md">
     @include('components.layouts.profile')
     @include('components.layouts.history-search')
@@ -19,13 +19,13 @@
                 {{ $history->action }}
               </div>
               <div class="mx-2 my-2 break-words">
-                {{ $history->details->pluck('product.name')->implode(',') }}
+                {{ $history->items->pluck('name')->implode(',') }}
               </div>
               @include('livewire.movement-history.show', [
                   'createAt' => $history->created_at->isoFormat('YYYY/MM/DD(ddd)'),
                   'userName' => $history->user->name,
                   'action' => $history->action,
-                  'details' => $history->details,
+                  'items' => $history->items,
               ])
             </div>
             <div class="my-auto flex-col items-center p-3 text-right md:col-span-2">

@@ -14,7 +14,7 @@
             <div class="text-sm">型番: <span x-text="item.model_number"></span></div>
           </div>
           <div class="pt-1 text-xl">
-            <span x-text="item.count"></span>
+            <span x-text="item.quantity"></span>
           </div>
         </li>
       </template>

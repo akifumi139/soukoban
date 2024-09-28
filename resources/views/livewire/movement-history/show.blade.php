@@ -1,8 +1,8 @@
 <x-dialog wire:model="showModal">
   <x-dialog.open>
-    <button class="relative items-center inline-clock text-green-700 ms-4" type="button">
+    <button class="inline-clock relative ms-4 items-center text-green-700" type="button">
       <i class="fa-solid fa-list"></i>
-      <span class="text-right -ms-2   py-1 px-2 rounded-sm">詳細</span>
+      <span class="-ms-2 rounded-sm px-2 py-1 text-right">詳細</span>
     </button>
   </x-dialog.open>
 
@@ -11,13 +11,13 @@
       <div>{{ $action . ' ' . $createAt }}</div>
       <div>{{ $userName }}</div>
     </div>
-    @foreach ($details as $log)
-      <div class="grid grid-cols-2 border-b border-gray-300 bg-white p-4 rounded-md shadow-sm">
-        <div class="text-gray-800 font-medium">
-          {{ $log->product?->name }}
+    @foreach ($items as $item)
+      <div class="grid grid-cols-2 rounded-md border-b border-gray-300 bg-white p-4 shadow-sm">
+        <div class="font-medium text-gray-800">
+          {{ $item->name }}
         </div>
-        <div class="text-gray-600 text-right">
-          {{ $log->count }}個
+        <div class="text-right text-gray-600">
+          {{ $item->quantity }}個
         </div>
       </div>
     @endforeach

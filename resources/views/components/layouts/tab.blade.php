@@ -6,8 +6,10 @@
         'text-gray-400' => $tab !== '工具箱',
     ])>
     <div>
-      <span class="hidden md:inline">{{ Auth::user()->name }}さんの</span>
-      工具箱
+      {{ Auth::user()->name }}
+      <span class="hidden md:inline">
+        さんの工具箱
+      </span>
       <i class="fas fa-briefcase ml-1"></i>
     </div>
     <hr @class([

@@ -6,8 +6,8 @@ namespace App\Livewire\RoomManager;
 
 use App\Livewire\Forms\ProductForm;
 use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Item;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
 use Livewire\Component;
@@ -17,16 +17,18 @@ final class StockManager extends Component
     #[Url]
     public string $search = '';
 
+    public array $filters = [];
+
     public ProductForm $form;
 
     public Collection $categories;
 
-    public Collection $stocks;
+    public Collection $itemList;
 
     public function mount()
     {
         $this->categories = Category::get();
-        $this->stocks = Product::get();
+        $this->itemList = Item::get();
     }
 
     public function render()
@@ -35,14 +37,14 @@ final class StockManager extends Component
     }
 
     #[Computed]
-    public function productList()
+    public function items()
     {
-        $products = Product::with(['stock', 'categories'])
+        return Item::with(['categories', 'tool', 'tool.stock', 'material', 'material.stock'])
+            ->whereHas('toolBoxes')
             ->search($this->search)
-            ->orderBy('id')
-            ->get();
-
-        return $products->groupBy('first_category');
+            ->categoryFilter($this->filters)
+            ->get()
+            ->sortBy('name');
     }
 
     public function setProduct(int $id)

@@ -5,36 +5,31 @@ declare(strict_types=1);
 namespace App\Livewire;
 
 use App\Actions\BringOutAction;
-use App\Models\Product;
+use App\Models\Item;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\On;
-use Livewire\Component;
 
-final class Stockroom extends Component
+final class Stockroom extends CartComponent
 {
-    public string $search = '';
-
     public function render()
     {
         return view('livewire.stockroom.index');
     }
 
     #[Computed]
-    public function productList()
+    public function items()
     {
-        $products = Product::with(['stock', 'categories'])
+        return Item::with(['categories', 'tool', 'tool.stock', 'material', 'material.stock'])
             ->search($this->search)
-            ->get();
-
-        return $products->groupBy('first_category');
+            ->categoryFilter($this->filters)
+            ->get()
+            ->sortBy('name');
     }
 
     #[On('bring-out')]
     public function bringOut($cart)
     {
         (new BringOutAction($cart))->exec();
-
-        session()->flash('message', '工具箱に入れました！！');
 
         return redirect()->route('stockroom');
     }

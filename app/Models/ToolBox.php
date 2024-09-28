@@ -12,53 +12,57 @@ final class ToolBox extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'product_id',
+        'item_id',
         'user_id',
-        'count',
+        'quantity',
     ];
 
-    public function product()
+    public function item()
     {
-        return $this->belongsTo(Product::class)->withTrashed();
+        return $this->belongsTo(Item::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public static function add(array $cart): void
     {
-        $products = array_map(function ($product) {
+        $items = array_map(function ($item) {
             return [
-                'product_id' => $product['product_id'],
+                'item_id' => $item['item_id'],
                 'user_id' => Auth::id(),
-                'count' => $product['count'],
+                'quantity' => $item['quantity'],
             ];
         }, $cart);
 
         self::insert(
-            $products
+            $items
         );
     }
 
     public static function remove(array $cart): void
     {
-        foreach ($cart as $return) {
-            $toolBoxes = ToolBox::where('product_id', $return['product_id'])
+        foreach ($cart as $item) {
+            $toolBoxes = ToolBox::where('item_id', $item['item_id'])
                 ->orderBy('id')
                 ->get();
 
-            $returnCount = $return['count'];
-
             foreach ($toolBoxes as $toolBox) {
-                $currentCount = $toolBox->count;
-
-                if ($returnCount >= $currentCount) {
-                    $returnCount -= $currentCount;
-                    $toolBox->delete();
-                } else {
-                    $toolBox->count -= $returnCount;
+                if ($item['quantity'] < $toolBox->quantity) {
+                    $toolBox->quantity -= $item['quantity'];
                     $toolBox->save();
                     break;
                 }
+
+                $item['quantity'] -= $toolBox->quantity;
+                $toolBox->delete();
             }
         }
+
     }
 }

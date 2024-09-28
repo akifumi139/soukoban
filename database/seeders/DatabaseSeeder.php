@@ -18,9 +18,14 @@ final class DatabaseSeeder extends Seeder
             'name' => 'soukoban',
         ]);
 
+        User::factory()->create([
+            'name' => 'taro',
+        ]);
+
         $this->call([
             CategorySeeder::class,
-            ProductSeeder::class,
+            ToolSeeder::class,
+            MaterialSeeder::class,
         ]);
     }
 }
