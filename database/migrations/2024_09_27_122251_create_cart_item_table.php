@@ -8,18 +8,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('cart_item', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('password');
-            $table->string('role');
-            
-            $table->datetimes();
+            $table->foreignId('cart_id')->constrained();
+            $table->foreignId('item_id')->constrained();
+            $table->unsignedInteger('quantity');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('cart_item');
     }
 };

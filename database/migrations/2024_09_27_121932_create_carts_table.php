@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tool_boxes', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained()->unique()->cascadeOnDelete();
+            $table->string('action');
             $table->foreignId('user_id')->constrained();
-            $table->unsignedInteger('count');
 
-            $table->dateTimes();
+            $table->dateTime('created_at')->useCurrent();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tool_boxes');
+        Schema::dropIfExists('carts');
     }
 };
