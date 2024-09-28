@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Auth;
 
 final class AuthController
 {
@@ -19,5 +20,12 @@ final class AuthController
         $request->session()->regenerate();
 
         return to_route('myStuff');
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return to_route('login');
     }
 }
