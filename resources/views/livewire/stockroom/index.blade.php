@@ -19,14 +19,16 @@
   </div>
   <div class="mb-4 mt-3 flex flex-row gap-3 ps-4 md:mx-20">
     <div wire:click='clearFilter' @class([
-        'cursor-pointer rounded bg-white px-3 py-1',
+        'cursor-pointer rounded px-3 py-1',
         'bg-blue-600 text-white' => empty($filters),
+        'bg-white text-black' => !empty($filters),
     ])>すべて</div>
 
     @foreach ($categories as $category)
       <div wire:click="toggleFilter('{{ $category->name }}')" @class([
-          'cursor-pointer rounded bg-white px-3 py-1',
+          'cursor-pointer rounded px-3 py-1',
           'bg-blue-600 text-white' => in_array($category->name, $filters, true),
+          'bg-white text-black' => !in_array($category->name, $filters, true),
       ])>{{ $category->name }}</div>
     @endforeach
   </div>
