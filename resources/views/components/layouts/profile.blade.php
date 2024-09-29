@@ -1,11 +1,14 @@
 <div class="flex justify-between">
-  <div class="rounded-br-lg bg-indigo-200 px-3 py-2 text-xl text-gray-800">
-    {{ Auth::user()->name }}
-  </div>
-  <form class="inline" action="{{ route('logout') }}" method="POST">
-    @csrf
-    <button class="rounded bg-gray-500 px-2 py-1 text-white hover:bg-red-700" type="submit">
-      ログアウト
+  <a class="flex h-14 w-14 flex-col items-center justify-center rounded-br-lg bg-stone-800" href="">
+    <i class="fa-solid fa-gear text-xl"></i>
+    <div class="text-xs">設定</div>
+  </a>
+
+  <form class="flex h-14 w-14 flex-col items-center justify-center rounded-bl-lg bg-stone-800"
+    action="{{ route('logout') }}" method="POST">
+    <button type="submit">
+      <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+      <div class="text-xs">ログアウト</div>
     </button>
   </form>
 </div>
