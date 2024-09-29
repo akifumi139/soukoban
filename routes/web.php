@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SettingController;
 use App\Livewire\DeleteStock;
 use App\Livewire\MovementHistory;
 use App\Livewire\MyStuff;
@@ -42,6 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::prefix('history')
         ->name('history')
         ->get('/', MovementHistory::class);
+
+    Route::prefix('settings')
+        ->name('settings.')
+        ->group(function () {
+            Route::get('/', SettingController::class)->name('index');
+        });
 
 });
 
