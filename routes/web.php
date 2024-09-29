@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SettingController;
@@ -56,6 +57,18 @@ Route::middleware('auth')->group(function () {
                 ->group(function () {
                     Route::get('', 'edit')->name('edit');
                     Route::post('', 'update')->name('update');
+                });
+
+            Route::controller(AccountController::class)
+                ->prefix('accounts')
+                ->name('accounts.')
+                ->group(function () {
+                    Route::get('', 'index')->name('index');
+                    Route::get('create', 'create')->name('create');
+                    Route::post('', 'store')->name('store');
+                    Route::get('{account}', 'edit')->name('edit');
+                    Route::post('{account}', 'update')->name('update');
+                    Route::delete('{account}', 'destroy')->name('destroy');
                 });
         });
 

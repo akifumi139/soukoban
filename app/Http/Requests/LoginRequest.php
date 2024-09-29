@@ -18,7 +18,7 @@ final class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'login_id' => ['required', 'string'],
             'password' => ['required', 'string'],
         ];
     }
@@ -32,7 +32,7 @@ final class LoginRequest extends FormRequest
      */
     public function authenticate()
     {
-        if (! Auth::guard('web')->attempt($this->only('name', 'password'))) {
+        if (! Auth::guard('web')->attempt($this->only('login_id', 'password'))) {
             throw ValidationException::withMessages([
                 'error' => 'ユーザーID・パスワードが間違っています。',
             ]);

@@ -28,7 +28,7 @@
       <div>
         <h2 class="mb-2 text-xl font-semibold">アカウント管理</h2>
         <a class="block w-full rounded-md bg-green-500 py-2 text-center text-white shadow-lg transition duration-300 hover:bg-green-600"
-          href="">アカウント一覧へ</a>
+          href="{{ route('settings.accounts.index') }}">アカウント一覧へ</a>
       </div>
     </div>
   </div>

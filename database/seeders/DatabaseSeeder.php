@@ -15,11 +15,14 @@ final class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::factory()->create([
-            'name' => 'soukoban',
+            'login_id' => 'soukoban',
+            'name' => '管理者',
         ]);
 
         User::factory()->create([
-            'name' => 'taro',
+            'login_id' => 'taro',
+            'name' => '従業員A',
+            'role' => '一般',
         ]);
 
         $this->call([
