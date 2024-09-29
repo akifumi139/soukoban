@@ -10,14 +10,7 @@
       {{ session('message') }}
     </div>
   @endif
-  <div class="md:mx-20">
-    <a class="my-2 inline-block items-center rounded bg-green-600 px-4 py-2 text-xl font-bold text-white"
-      href="{{ route('roomManager') }}">
-      <i class="fa-solid fa-bars-progress me-2"></i>
-      倉庫管理
-    </a>
-  </div>
-  <div class="mb-4 mt-3 flex flex-row gap-3 ps-4 md:mx-20">
+  <div class="mb-4 mt-6 flex flex-row gap-3 ps-4 md:mx-20">
     <div wire:click='clearFilter' @class([
         'cursor-pointer rounded px-3 py-1',
         'bg-blue-600 text-white' => empty($filters),
