@@ -7,6 +7,7 @@
 
   <form class="flex h-14 w-14 flex-col items-center justify-center rounded-bl-lg bg-stone-800"
     action="{{ route('logout') }}" method="POST">
+    @csrf
     <button type="submit">
       <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
       <div class="text-xs">ログアウト</div>
