@@ -10,7 +10,7 @@
       {{ session('message') }}
     </div>
   @endif
-  <div class="mb-4 flex flex-row gap-3 ps-4 md:mx-20">
+  <div class="mb-4 mt-10 flex flex-row gap-3 ps-4 md:mx-20">
     <div wire:click='clearFilter' @class([
         'cursor-pointer rounded px-3 py-1',
         'bg-blue-600 text-white' => empty($filters),
