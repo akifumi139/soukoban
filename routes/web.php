@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SettingController;
 use App\Livewire\DeleteStock;
 use App\Livewire\MovementHistory;
@@ -48,6 +49,14 @@ Route::middleware('auth')->group(function () {
         ->name('settings.')
         ->group(function () {
             Route::get('/', SettingController::class)->name('index');
+
+            Route::controller(PasswordController::class)
+                ->prefix('password')
+                ->name('password.')
+                ->group(function () {
+                    Route::get('', 'edit')->name('edit');
+                    Route::post('', 'update')->name('update');
+                });
         });
 
 });
