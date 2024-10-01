@@ -1,5 +1,5 @@
-name,stock
-クラフト台,6
-エンチャント台,3
-ビーコン,4
-鉄の剣,7
+name,model_number,stock
+クラフト台,mt-a,6
+エンチャント台,mt-b,3
+ビーコン,mt-c,4
+鉄の剣,mt-b,7

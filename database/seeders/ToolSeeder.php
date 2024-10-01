@@ -21,10 +21,11 @@ final class ToolSeeder extends Seeder
         $csv = explode("\n", str_replace(["\r\n", "\r"], "\n", $csvFile));
         array_shift($csv);
         $tools = array_map(function ($date) {
-            [$name,$stock] = explode(',', $date);
+            [$name,$model_number,$stock] = explode(',', $date);
 
             return [
                 'name' => $name,
+                'model_number' => $model_number,
                 'stock' => intval($stock),
             ];
         }, $csv);
@@ -34,6 +35,7 @@ final class ToolSeeder extends Seeder
             Tool::factory(
                 [
                     'name' => $tool['name'],
+                    'model_number' => $tool['model_number'],
                 ]
             )
                 ->withItem($categories, $tool['stock'])
