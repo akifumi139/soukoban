@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Tool;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 final class ToolSeeder extends Seeder
 {
@@ -14,20 +15,28 @@ final class ToolSeeder extends Seeder
      */
     public function run(): void
     {
-        $tools = [
-            ['name' => 'クラフト台', 'categories' => ['道具'], 'stock' => 6],
-            ['name' => 'エンチャント台', 'categories' => ['道具'], 'stock' => 3],
-            ['name' => 'ビーコン', 'categories' => ['道具'], 'stock' => 4],
-            ['name' => '鉄の剣', 'categories' => ['道具'], 'stock' => 7],
-        ];
+        $filePath = config('init-file-path.tools');
+        $csvFile = Storage::disk('local')->get($filePath);
 
+        $csv = explode("\n", str_replace(["\r\n", "\r"], "\n", $csvFile));
+        array_shift($csv);
+        $tools = array_map(function ($date) {
+            [$name,$stock] = explode(',', $date);
+
+            return [
+                'name' => $name,
+                'stock' => intval($stock),
+            ];
+        }, $csv);
+
+        $categories = ['道具'];
         foreach ($tools as $tool) {
             Tool::factory(
                 [
                     'name' => $tool['name'],
                 ]
             )
-                ->withItem($tool['categories'], $tool['stock'])
+                ->withItem($categories, $tool['stock'])
                 ->create();
         }
     }
