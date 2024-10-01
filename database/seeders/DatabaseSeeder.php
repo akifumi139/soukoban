@@ -28,7 +28,7 @@ final class DatabaseSeeder extends Seeder
         $this->call([
             CategorySeeder::class,
             ToolSeeder::class,
-            MaterialSeeder::class,
+            // MaterialSeeder::class,
         ]);
     }
 }
