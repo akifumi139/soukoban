@@ -6,12 +6,10 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\SettingController;
-use App\Livewire\DeleteStock;
 use App\Livewire\MovementHistory;
 use App\Livewire\MyStuff;
-use App\Livewire\RoomManager\AddStock;
-use App\Livewire\RoomManager\CategoryManager;
-use App\Livewire\RoomManager\StockManager;
+use App\Livewire\StockManager\AddStock;
+use App\Livewire\StockManager\DeleteStock;
 use App\Livewire\Stockroom;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
@@ -25,15 +23,6 @@ Route::controller(AuthController::class)
     });
 
 Route::middleware('auth')->group(function () {
-    Route::prefix('roomManager')
-        ->name('roomManager')
-        ->group(function () {
-            Route::get('/', StockManager::class);
-            Route::get('add', AddStock::class)->name('.add');
-            Route::get('delete', DeleteStock::class)->name('.delete');
-            Route::get('categories/manager', CategoryManager::class)->name('.category');
-        });
-
     Route::prefix('stockroom')
         ->name('stockroom')
         ->get('/', Stockroom::class);
@@ -41,6 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::prefix('myStuff')
         ->name('myStuff')
         ->get('/', MyStuff::class);
+
+    Route::prefix('stock-manager')
+        ->name('stock-manager.')
+        ->group(function () {
+            Route::get('add', AddStock::class)->name('add');
+            Route::get('delete', DeleteStock::class)->name('delete');
+
+        });
 
     Route::prefix('history')
         ->name('history')

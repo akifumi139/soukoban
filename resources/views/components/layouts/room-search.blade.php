@@ -1,4 +1,4 @@
-<div class="container mx-auto flex flex-col items-center justify-center p-2 md:flex-row">
+<div class="container mx-auto flex flex-col items-center justify-center p-2 pb-0 md:-mt-10 md:flex-row">
   <input
     class="w-full rounded-full border bg-gray-200 p-2 text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 md:max-w-md"
     type="text" wire:model.change="search" placeholder="検索...">

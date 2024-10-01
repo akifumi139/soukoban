@@ -7,7 +7,7 @@ namespace App\Enums;
 enum CartActionStatus: string
 {
     case BRING_OUT = '持ち出し';
-    case DELIVERY = '搬入';
-    case REMOVAL = '撤去';
+    case ADD_STOCK = '搬入';
+    case REMOVE_STOCK = '撤去';
     case GIVEBACK = '返却';
 }

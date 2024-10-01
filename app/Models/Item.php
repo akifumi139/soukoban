@@ -14,6 +14,11 @@ final class Item extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'stock_id',
+        'quantity',
+    ];
+
     public function toolBoxes()
     {
         return $this->hasMany(ToolBox::class);

@@ -11,6 +11,12 @@ final class Tool extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'item_id',
+        'user_id',
+        'name',
+    ];
+
     public $timestamps = false;
 
     public function item()

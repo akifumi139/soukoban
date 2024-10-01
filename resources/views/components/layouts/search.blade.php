@@ -8,7 +8,7 @@
     </a>
     @if (Auth::user()->role == '管理者')
       <a class="inline-block items-center rounded bg-green-600 px-2 py-1 text-xl font-bold text-white"
-        href="{{ route('roomManager') }}">
+        href="{{ route('stock-manager.add') }}">
         <i class="fa-solid fa-bars-progress"></i>
         倉庫管理
       </a>

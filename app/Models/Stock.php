@@ -32,6 +32,33 @@ final class Stock extends Model
         ");
     }
 
+    public static function addItems($cart)
+    {
+        $category = Category::firstOrCreate([
+            'name' => '道具',
+        ]);
+
+        $newIds = [];
+        //道具
+        foreach ($cart as $tool) {
+            $item = Item::create([
+                'stock_id' => $tool['quantity'],
+            ]);
+
+            $item->categories()->attach([$category->id]);
+
+            Tool::create([
+                'item_id' => $item->id,
+                'model_number' => $tool['model_number'],
+                'name' => $tool['name'],
+            ]);
+
+            $newIds[$tool['item_id']] = $item->id;
+        }
+
+        return $newIds;
+    }
+
     public static function addQuantity($cart)
     {
         $caseStatements = collect($cart)->map(function ($item) {
