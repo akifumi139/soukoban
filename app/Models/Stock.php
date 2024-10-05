@@ -64,6 +64,24 @@ final class Stock extends Model
         return true;
     }
 
+    public static function removeQuantity($cart)
+    {
+        $caseStatements = collect($cart)->map(function ($item) {
+            return "WHEN id = {$item['item_id']} THEN quantity - {$item['quantity']}";
+        })->implode(' ');
+
+        $conditionStatements = collect($cart)->pluck('item_id')->implode(',');
+
+        DB::update("
+            UPDATE stocks
+            SET quantity = CASE
+                {$caseStatements}
+                ELSE quantity
+            END
+            WHERE id IN ({$conditionStatements})
+        ");
+    }
+
     public static function deleteItem(array $cart): void
     {
         $itemIds = array_map(function ($item) {
