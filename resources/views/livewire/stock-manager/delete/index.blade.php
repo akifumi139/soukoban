@@ -4,68 +4,92 @@
     @include('components.layouts.search')
   </header>
   <div class="h-28 md:h-24"></div>
-  <div class="mb-2 flex justify-end space-x-2 md:mx-20">
-    <button class="relative flex items-center rounded-md bg-orange-600 px-3 py-2 text-xl text-white"
-      wire:click="switching('追加')">
-      <i class="fa-solid fa-trash me-2 text-xl"></i>
-      追加モード
-    </button>
-  </div>
   @if (session('message'))
     <div class="mt-4 rounded border border-green-200 bg-green-100 p-4 text-green-700">
       {{ session('message') }}
     </div>
   @endif
-  <div class="mb-4 mt-6 flex flex-row gap-3 ps-4 md:mx-20">
-    <div wire:click='clearFilter' @class([
-        'cursor-pointer rounded px-3 py-1',
-        'bg-blue-600 text-white' => empty($filters),
-        'bg-white text-black' => !empty($filters),
-    ])>すべて</div>
-
-    @foreach ($categories as $category)
-      <div wire:click="toggleFilter('{{ $category->name }}')" @class([
-          'cursor-pointer rounded px-3 py-1',
-          'bg-blue-600 text-white' => in_array($category->name, $filters, true),
-          'bg-white text-black' => !in_array($category->name, $filters, true),
-      ])>{{ $category->name }}</div>
-    @endforeach
+  <div class="mx-2 flex justify-end px-1 xl:mx-20">
+    <a class="rounded-sm bg-rose-400 p-2 px-4 font-bold tracking-wider text-white"
+      href="{{ route('stock-manager.add') }}">道具・資材の追加</a>
   </div>
-  <main class="mb-20 px-1 md:mx-20">
-    <div class="grid grid-cols-1 gap-4 p-1 md:grid-cols-2 lg:grid-cols-3">
-      @foreach ($this->items as $item)
-        <div @class([
-            'p-4 rounded-lg shadow-md relative bg-white',
-            'bg-gray-400' => $item->status === '削除候補',
-        ])>
-          <div class="absolute right-0 top-0">
-            @if ($item->status === '削除候補')
-              <button
-                class="rounded-bl border bg-blue-800 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                wire:click="removeCandidates({{ $item->id }})">
-                <i class="fa-solid fa-recycle text-lg text-white"></i>
-              </button>
-            @else
-              <button
-                class="rounded-bl border bg-rose-800 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                wire:click="addCandidates({{ $item->id }})">
-                <i class="fa-solid fa-trash text-lg text-white"></i>
-              </button>
-            @endif
-          </div>
+  <main class="mx-2 mb-20 px-1 xl:mx-20">
+    <div class="mb-4 flex flex-row gap-3 ps-4">
+      <div wire:click='clearFilter' @class([
+          'cursor-pointer rounded px-3 py-1',
+          'bg-blue-600 text-white' => empty($filters),
+          'bg-white text-black' => !empty($filters),
+      ])>すべて</div>
 
-          <h2 class="text-xl font-semibold">{{ $item->name }}</h2>
-          <p class="text-gray-700">カテゴリ: {{ $item->categories }}</p>
-          <p class="mb-2 text-gray-700">型番: {{ $item->model_number }}</p>
-          <p class="text-right text-lg font-medium">
-            在庫数:
-            <span class="text-xl font-semibold">{{ $item->count }}</span>
-          </p>
+      @foreach ($categories as $category)
+        <div wire:click="toggleFilter('{{ $category->name }}')" @class([
+            'cursor-pointer rounded px-3 py-1',
+            'bg-blue-600 text-white' => in_array($category->name, $filters, true),
+            'bg-white text-black' => !in_array($category->name, $filters, true),
+        ])>{{ $category->name }}
+        </div>
+      @endforeach
+    </div>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      @foreach ($this->items as $item)
+        <div class="min-h-40 shadow-mdv relative flex rounded-lg bg-white ps-4">
+          <div class="min-w-56 relative h-full w-11/12 pt-2">
+            <h2 class="text-xl font-semibold">{{ $item->name }}</h2>
+            <div class="text-gray-700">{{ $item->model_number }}</div>
+            <div class="flex gap-2 text-left text-base font-medium">
+              <div>在庫数:<span class="ms-2 text-xl font-semibold">{{ $item->quantity }}</span></div>
+            </div>
+            <div class="absolute bottom-2 left-2">
+              @foreach ($item->categories as $category)
+                <span class="rounded-md bg-blue-400 px-2 py-1 text-sm text-white">{{ $category->name }}</span>
+              @endforeach
+            </div>
+          </div>
+          <div class="flex flex-col justify-end text-end">
+            <button
+              class="block h-10 w-16 rounded-t border bg-rose-500 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              @click="addToCart({{ $item->id }})">
+              <i class="fa-solid fa-angle-up text-lg"></i>
+            </button>
+            <div class="my-2 mb-4 text-left">
+              <span class="block text-center text-sm">
+                処分
+              </span>
+              <div class="w-18 rounded-md p-1 text-center text-xl font-semibold"
+                x-bind:class="{
+                    'text-red-700 bg-red-100': cart[{{ $item->id }}]?.quantity > 0,
+                    'text-black': cart[{{ $item->id }}]
+                        ?.quantity === 0
+                }">
+                <span x-text="cart[{{ $item->id }}]?.quantity ?? 0"></span>
+              </div>
+            </div>
+            <button
+              class="mt-2 block h-10 w-16 rounded-b border border-gray-700 bg-gray-800 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+              @click="removeFromCart({{ $item->id }})">
+              <i class="fa-solid fa-angle-down text-lg"></i>
+            </button>
+          </div>
         </div>
       @endforeach
     </div>
   </main>
-
+  <div class="fixed bottom-4 right-2">
+    <button
+      class="rounded-full bg-rose-700 px-4 py-3 text-4xl text-white shadow-lg hover:bg-rose-800 focus:outline-none"
+      @click="open = true">
+      <i class="fa-solid fa-trash"></i>
+      <template x-if="totalItem()> 0">
+        <span
+          class="absolute -top-1 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white"
+          x-text="totalItem()">
+        </span>
+      </template>
+    </button>
+    <div class="modal" :class="{ 'active': open }" @click.self="">
+      @include('livewire.stock-manager.delete.cart')
+    </div>
+  </div>
   <script>
     function cartComponent() {
       return {
@@ -73,7 +97,7 @@
         items: {},
         cart: {},
         init() {
-          this.items = @json($itemList)
+          this.items = @json($itemList);
         },
         addToCart(id) {
           const item = this.items.find(item => item.id === id);
@@ -86,7 +110,8 @@
               item_id: item.id,
               name: item.name,
               model_number: item.model_number,
-              quantity: 1
+              quantity: 1,
+              stock: item.stock,
             };
             return;
           }
@@ -106,8 +131,8 @@
             delete this.cart[id];
           }
         },
-        bringOut() {
-          window.Livewire.dispatch('bring-out', {
+        deleteStock() {
+          window.Livewire.dispatch('delete-stock', {
             'cart': this.cart
           });
         },

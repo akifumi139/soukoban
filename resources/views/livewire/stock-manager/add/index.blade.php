@@ -9,6 +9,10 @@
       {{ session('message') }}
     </div>
   @endif
+  <div class="mx-2 flex justify-end px-1 xl:mx-20">
+    <a class="rounded-sm bg-red-700 p-2 px-4 font-bold tracking-wider text-white"
+      href="{{ route('stock-manager.delete') }}">道具・資材の処分</a>
+  </div>
   <main class="mx-2 mb-20 px-1 xl:mx-20">
     <div class="mt-4 grid grid-cols-1 gap-4 p-1 md:grid-cols-2 lg:grid-cols-3" id="newItemArea">
       <button

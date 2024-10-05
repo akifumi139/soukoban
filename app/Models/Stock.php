@@ -14,24 +14,6 @@ final class Stock extends Model
 
     const CREATED_AT = null;
 
-    public static function removeQuantity($cart)
-    {
-        $caseStatements = collect($cart)->map(function ($item) {
-            return "WHEN id = {$item['item_id']} THEN quantity - {$item['quantity']}";
-        })->implode(' ');
-
-        $conditionStatements = collect($cart)->pluck('item_id')->implode(',');
-
-        DB::update("
-            UPDATE stocks
-            SET quantity = CASE
-                {$caseStatements}
-                ELSE quantity
-            END
-            WHERE id IN ({$conditionStatements})
-        ");
-    }
-
     public static function addItems($cart)
     {
         $category = Category::firstOrCreate([
@@ -66,6 +48,39 @@ final class Stock extends Model
         }
         $caseStatements = collect($cart)->map(function ($item) {
             return "WHEN id = {$item['item_id']} THEN quantity + {$item['quantity']}";
+        })->implode(' ');
+
+        $conditionStatements = collect($cart)->pluck('item_id')->implode(',');
+
+        DB::update("
+            UPDATE stocks
+            SET quantity = CASE
+                {$caseStatements}
+                ELSE quantity
+            END
+            WHERE id IN ({$conditionStatements})
+        ");
+
+        return true;
+    }
+
+    public static function deleteItem(array $cart): void
+    {
+        $itemIds = array_map(function ($item) {
+            return $item['item_id'];
+        }, $cart);
+
+        Item::whereIn('id', $itemIds)->delete();
+    }
+
+    public static function subQuantity(array $cart): bool
+    {
+        if (empty($cart)) {
+            return false;
+        }
+
+        $caseStatements = collect($cart)->map(function ($item) {
+            return "WHEN id = {$item['item_id']} THEN quantity - {$item['quantity']}";
         })->implode(' ');
 
         $conditionStatements = collect($cart)->pluck('item_id')->implode(',');
