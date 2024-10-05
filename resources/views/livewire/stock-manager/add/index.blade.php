@@ -9,8 +9,8 @@
       {{ session('message') }}
     </div>
   @endif
-  <main class="mb-20 px-1 md:mx-20">
-    <div class="grid grid-cols-1 gap-4 p-1 md:grid-cols-2 lg:grid-cols-3" id="newItemArea">
+  <main class="mx-2 mb-20 px-1 xl:mx-20">
+    <div class="mt-4 grid grid-cols-1 gap-4 p-1 md:grid-cols-2 lg:grid-cols-3" id="newItemArea">
       <button
         class="min-h-40 relative flex flex-col items-center justify-center rounded-lg border-4 border-dashed border-green-800 bg-white px-4 py-2 opacity-80 hover:bg-green-400"
         @click="openCreateForm()">
@@ -78,36 +78,38 @@
         </div>
       @endforeach
     </div>
-    <div class="grid grid-cols-1 gap-4 p-1 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       @foreach ($this->items as $item)
-        <div class="min-h-40 relative rounded-lg bg-white px-4 py-2 shadow-md">
-          <h2 class="text-xl font-semibold">{{ $item->name }}</h2>
-          <div class="text-gray-700">{{ $item->model_number }}</div>
-          <div class="flex gap-2 text-left text-base font-medium">
-            <div>在庫数:<span class="ms-2 text-xl font-semibold">{{ $item->quantity }}</span></div>
-            <div class="ms-2 mt-1 text-xl">
-              @if ($item->type === 'tool')
-                @foreach ($item->borrowers as $borrower)
-                  <div class="rounded-md text-base">{{ $borrower->name }}</div>
-                @endforeach
-              @endif
+        <div class="min-h-40 shadow-mdv relative flex rounded-lg bg-white ps-4">
+          <div class="min-w-56 relative h-full w-11/12 pt-2">
+            <h2 class="text-xl font-semibold">{{ $item->name }}</h2>
+            <div class="text-gray-700">{{ $item->model_number }}</div>
+            <div class="flex gap-2 text-left text-base font-medium">
+              <div>在庫数:<span class="ms-2 text-xl font-semibold">{{ $item->quantity }}</span></div>
+              <div class="ms-2 mt-1 text-xl">
+                @if ($item->type === 'tool')
+                  @foreach ($item->borrowers as $borrower)
+                    <div class="rounded-md text-base">{{ $borrower->name }}</div>
+                  @endforeach
+                @endif
+              </div>
+            </div>
+            <div class="absolute bottom-2 left-2">
+              @foreach ($item->categories as $category)
+                <span class="rounded-md bg-blue-400 px-2 py-1 text-sm text-white">{{ $category->name }}</span>
+              @endforeach
             </div>
           </div>
-          <div class="absolute bottom-2 left-2">
-            @foreach ($item->categories as $category)
-              <span class="rounded-md bg-blue-400 px-2 py-1 text-sm text-white">{{ $category->name }}</span>
-            @endforeach
-          </div>
-          <div class="absolute right-0 top-0">
+          <div class="flex flex-col justify-end text-end">
             <button
               class="block h-10 w-16 rounded-t border bg-cyan-600 px-2 text-sm text-white transition duration-150 ease-in-out hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
               @click="addToCart({{ $item->id }})">
               <i class="fa-solid fa-angle-up text-lg"></i>
             </button>
             <div class="my-2 mb-4 text-left">
-              <label class="block text-center text-sm" for="">
-                追加カート
-              </label>
+              <span class="block text-center text-sm">
+                追加
+              </span>
               <div class="w-18 rounded-md p-1 text-center text-xl font-semibold"
                 x-bind:class="{
                     'text-green-600 bg-green-100': cart[{{ $item->id }}]?.quantity > 0,
@@ -159,9 +161,6 @@
         },
         addToCart(id) {
           const item = this.items.find(item => item.id === id);
-          if (item.stock == 0) {
-            return;
-          }
 
           if (!this.cart[id]) {
             this.cart[id] = {
@@ -172,6 +171,7 @@
             };
             return;
           }
+
           this.cart[id].quantity++;
         },
         openCreateForm() {
