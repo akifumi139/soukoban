@@ -1,7 +1,7 @@
 <div class="flex min-h-screen items-center justify-center">
   <div class="max-w-96 fixed top-56 z-20 mx-auto w-11/12 rounded-lg bg-white p-1 md:top-44">
     <div class="flex justify-between p-1">
-      <div class="text-xl font-bold">持ち出しカート</div>
+      <div class="text-xl font-bold">追加カート</div>
       <button class="text-3xl font-bold text-slate-900" @click="open = false">
         <i class="fa-regular fa-circle-xmark"></i>
       </button>
@@ -19,19 +19,18 @@
         </li>
       </template>
 
-      <template x-if="Object.keys(cart).length === 0">
-        <p class="ms-2 text-center text-lg text-black">カートに追加してください。</p>
-      </template>
-
-      <div class="h-20">
+      <div class="min-h-20">
+        <template x-if="Object.keys(cart).length === 0">
+          <p class="ms-2 text-center text-lg text-black">カートに追加してください。</p>
+        </template>
       </div>
+
       <template x-if="Object.keys(cart).length > 0">
         <div class="absolute bottom-2 left-0 right-0 mx-auto mt-4 flex justify-center">
           <button class="flex items-center rounded bg-sky-600 px-4 py-2 text-xl font-bold text-white" @click="addStock">
             追加
           </button>
         </div>
-
       </template>
     </div>
   </div>
