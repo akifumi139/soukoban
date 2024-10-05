@@ -33,15 +33,9 @@
             <h2 class="text-xl font-semibold">{{ $item->name }}</h2>
             <div class="text-gray-700">{{ $item->model_number }}</div>
             <div class="flex gap-2 text-left text-base font-medium">
-              <div>在庫数
-                <span class="ms-2 text-xl font-semibold">{{ $item->quantity }}</span>
-              </div>
-              <div class="ms-2 mt-1 text-xl">
-                @if ($item->type === 'tool')
-                  @foreach ($item->borrowers as $borrower)
-                    <div class="rounded-md text-base">{{ $borrower->name }}</div>
-                  @endforeach
-                @endif
+              <div>
+                所持数:
+                <span class="text-xl font-semibold">{{ $item->my_stock }}</span>
               </div>
             </div>
             <div class="absolute -left-1 bottom-2">
