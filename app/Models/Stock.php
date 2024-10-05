@@ -59,8 +59,11 @@ final class Stock extends Model
         return $newIds;
     }
 
-    public static function addQuantity($cart)
+    public static function addQuantity(array $cart): bool
     {
+        if (empty($cart)) {
+            return false;
+        }
         $caseStatements = collect($cart)->map(function ($item) {
             return "WHEN id = {$item['item_id']} THEN quantity + {$item['quantity']}";
         })->implode(' ');
@@ -75,5 +78,7 @@ final class Stock extends Model
             END
             WHERE id IN ({$conditionStatements})
         ");
+
+        return true;
     }
 }
