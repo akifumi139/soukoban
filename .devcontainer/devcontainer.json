@@ -1,6 +1,6 @@
 // https://aka.ms/devcontainer.json
 {
-	"name": "Laravel Dev Cotainer",
+	"name": "Soukoban Container",
 	"dockerComposeFile": [
 		"../docker-compose.yml"
 	],
